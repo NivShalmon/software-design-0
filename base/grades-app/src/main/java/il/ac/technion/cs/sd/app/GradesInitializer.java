@@ -1,12 +1,23 @@
 package il.ac.technion.cs.sd.app;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import library.Dict;
+import library.Pair;
+
 /** This class will be instantiated once per test. */
 public class GradesInitializer {
-  /**
-   * Saves the csvData persistently, so that it could be run using GradesRunner.
-   * The format of each line of the data is $id,$grade.
-   */
+  /** Saves the csvData persistently, so that it could be run using
+   * GradesRunner. The format of each line of the data is $id,$grade. */
   public void setup(String csvData) {
-    throw new UnsupportedOperationException("Not implemented");
+    List<String> lines = Arrays.asList(csvData.split("\n"));
+    List<Pair> pairs = lines.stream().map((line) -> {
+      String[] arr = line.split(",");
+      return new Pair(arr[0], arr[1]);
+    }).collect(Collectors.toList());
+    Dict.store(pairs);
   }
+  
 }
