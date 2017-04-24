@@ -26,7 +26,7 @@ public class GradesInitializer {
 	 */
 	public void setup(String csvData) {
 		List<String> lines = Arrays.asList(csvData.split("\n"));
-		List<Pair> pairs = lines.stream().map((line) -> {
+		List<Pair> pairs = lines.stream().map(line -> {
 			String[] arr = line.split(",");
 			return new Pair(arr[0], arr[1]);
 		}).collect(Collectors.toList());
