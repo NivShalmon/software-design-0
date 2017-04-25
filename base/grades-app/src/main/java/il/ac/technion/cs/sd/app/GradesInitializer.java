@@ -1,5 +1,6 @@
 package il.ac.technion.cs.sd.app;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,9 +29,17 @@ public class GradesInitializer {
 		List<String> lines = Arrays.asList(csvData.split("\n"));
 		List<Pair> pairs = lines.stream().map(line -> {
 			String[] arr = line.split(",");
+			assert arr.length == 2 : "not legal csv";
 			return new Pair(arr[0], arr[1]);
 		}).collect(Collectors.toList());
-		dict.store(pairs);
+		List<Pair> $ = new ArrayList<>();
+		//ensuring only the last grade is added
+	    for(Pair pair : pairs){
+			$ = $.stream().filter(p->!p.getKey().equals(pair.getKey()))//
+					.collect(Collectors.toList());
+			$.add(pair);
+		}
+		dict.store($);
 	}
 
 }

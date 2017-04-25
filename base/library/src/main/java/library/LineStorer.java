@@ -2,6 +2,10 @@ package library;
 
 import il.ac.technion.cs.sd.grades.ext.LineStorage;
 
+/**
+ * A wrapper class for {@link LineStorage}, to allow use of it
+ * as a {@link Storer}
+ */
 public class LineStorer implements Storer {
   @Override public void appendLine(String line) {
     LineStorage.appendLine(line);

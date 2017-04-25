@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+/**
+ * A storer to be used for storing where a functional storer
+ * is needed. Uses a list of strings to simulate the file.
+ * Should only be used for testing as it is not persistent.
+ */
 public class TestStorer implements Storer {
   private List<String> lst = new ArrayList<>();
 

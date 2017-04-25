@@ -1,11 +1,14 @@
 package library;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
+import il.ac.technion.cs.sd.grades.ext.LineStorage;
+
 /**
- * Implements a basic dictionary using a Storer and binary search. The defualt
- * Storer is LineStorer, which is a wrapper to base's LineStorage.
+ * Implements a basic dictionary using a {@link Storer} and binary search. The
+ * defualt {@link Storer} is {@link LineStorer}, which is a wrapper to
+ * {@link LineStorage}
  */
 public class Dict {
 
@@ -20,12 +23,16 @@ public class Dict {
 		this.storer = storer;
 	}
 
-	/** stores a list of pairs in the supplied storer.
-	 * Should only be called once.
+	/**
+	 * stores a list of pairs in the supplied {@link Storer}. Should only be
+	 * called once.
+	 * 
 	 * @param pairs
+	 *            pairs of key value to be stored
 	 */
-	public void store(List<Pair> pairs) {
-		assert initialized = !initialized; //assert store wasn't called yet
+	public void store(Collection<Pair> pairs) {
+		assert !initialized;
+		initialized = true;
 		pairs.stream().sorted().forEachOrdered(element -> {
 			storer.appendLine(element.getKey());
 			storer.appendLine(element.getValue());
@@ -33,8 +40,9 @@ public class Dict {
 	}
 
 	/**
-	 * @param key the key to be searched in the dictionary
-	 * @return the value that matches key or Optional.empty() otherwise.
+	 * @param key
+	 *            the key to be searched in the dictionary
+	 * @return the value that matches key or {@link Optional.empty} otherwise.
 	 */
 	public Optional<String> find(String key) {
 		int size = storer.numberOfLines();

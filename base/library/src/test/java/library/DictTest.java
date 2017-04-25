@@ -51,6 +51,19 @@ public class DictTest {
 		assertEquals(1456 + "", testDict.find("1456").get());
 		assertEquals(Optional.empty(), testDict.find("4000"));
 	}
+	
+	@Test
+	public void test3() {
+		List<Pair> input = new ArrayList<Pair>();
+		input.add(new Pair("b", "Niv"));
+		input.add(new Pair("a", "Dor"));
+		Dict testDict = new Dict(new TestStorer());
+
+		testDict.store(input);
+		//
+		assertEquals("Niv", testDict.find("b").get());
+		assertEquals("Dor", testDict.find("a").get());
+	}
 
 	// a test using mocking to ensure the storer is used when store is called
 	@Test
