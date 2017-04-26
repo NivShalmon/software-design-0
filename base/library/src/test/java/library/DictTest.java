@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 
 public class DictTest {
-	@Test
+	@Test()
 	public void test0() {
 		List<Pair> input = new ArrayList<Pair>();
 		input.add(new Pair("a", "Dor"));
@@ -23,10 +24,9 @@ public class DictTest {
 		testDict.store(input);
 		//
 		assertEquals("Niv", testDict.find("b").get());
-		assertEquals("Dor", testDict.find("a").get());
 	}
 
-	@Test
+	@Test()
 	public void test1() {
 		List<Pair> input = new ArrayList<Pair>();
 		input.add(new Pair("a", "Dor"));
@@ -38,7 +38,7 @@ public class DictTest {
 		assertThat(testDict.find("asdf"), is(Optional.empty()));
 	}
 
-	@Test
+	@Test()
 	public void test2() {
 		List<Pair> input = new ArrayList<Pair>();
 		for (int i = 0; i < 3339; i++) {
@@ -49,10 +49,9 @@ public class DictTest {
 		testDict.store(input);
 		//
 		assertEquals(1456 + "", testDict.find("1456").get());
-		assertEquals(Optional.empty(), testDict.find("4000"));
 	}
 	
-	@Test
+	@Test()
 	public void test3() {
 		List<Pair> input = new ArrayList<Pair>();
 		input.add(new Pair("b", "Niv"));
@@ -62,7 +61,33 @@ public class DictTest {
 		testDict.store(input);
 		//
 		assertEquals("Niv", testDict.find("b").get());
-		assertEquals("Dor", testDict.find("a").get());
+	}
+	
+	@Test(timeout = 10000)
+	public void timeTest() {
+		List<Pair> input = new ArrayList<Pair>();
+		for (int i = 1000000; i < 2000000; i++) {
+			input.add(new Pair(i + "", i % 100 + ""));
+		}
+		Dict testDict = new Dict(new TestStorer(true));
+		//
+		testDict.store(input);
+		//
+		assertEquals(0 + "", testDict.find("1597000").get());
+	}
+	
+	@Test(timeout = 10000)
+	public void timeTestSort() {
+		List<Pair> input = new LinkedList<Pair>();
+		for (int i = 2000000; i < 2500000; i++) {
+			input.add(i%100,new Pair(i + "", i % 100 + ""));
+			input.add(i%200,new Pair(i + 500000 + "", i % 100 + ""));
+		}
+		Dict testDict = new Dict(new TestStorer(true));
+		//
+		testDict.store(input);
+		//
+		assertEquals(0 + "", testDict.find("2597000").get());
 	}
 
 	// a test using mocking to ensure the storer is used when store is called
