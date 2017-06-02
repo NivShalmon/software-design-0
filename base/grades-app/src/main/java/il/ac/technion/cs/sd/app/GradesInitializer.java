@@ -2,8 +2,14 @@ package il.ac.technion.cs.sd.app;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.management.openmbean.KeyAlreadyExistsException;
 
 import library.Dict;
 import library.Pair;
@@ -32,14 +38,9 @@ public class GradesInitializer {
 			assert arr.length == 2 : "not legal csv";
 			return new Pair(arr[0], arr[1]);
 		}).collect(Collectors.toList());
-		List<Pair> $ = new ArrayList<>();
-		//ensuring only the last grade is added
-	    for(Pair pair : pairs){
-			$ = $.stream().filter(p->!p.getKey().equals(pair.getKey()))//
-					.collect(Collectors.toList());
-			$.add(pair);
-		}
-		dict.store($);
+		Map<String,Pair> $ = new HashMap<>();
+		pairs.forEach(p -> $.put(p.getKey(), p));
+		dict.store($.values());
 	}
 
 }
